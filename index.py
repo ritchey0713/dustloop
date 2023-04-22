@@ -40,6 +40,7 @@ info_box_table = info_box.find('table', {'class': 'infobox'})
 
 charImg = f"https://www.dustloop.com{info_box_table.find('a').contents[0]['src']}"
 
+# char data for jump frames etc
 info_box_data = {}
 for idx, data in enumerate(info_box_table.find_all('tr')):
     # print(f"hello: {data.text.lower().replace(' ', '_')} at idx: {idx}")
@@ -49,5 +50,20 @@ for idx, data in enumerate(info_box_table.find_all('tr')):
       info_box_data[info_box_table.find_all('tr')[idx -1].text.lower().replace(' ', '_')] = data.text
     else:
       info_box_data[data.text.lower().replace(' ', '_')] = ''
-    print(info_box_data)
+
+attack_containers = soup.find('div', {'id': 'mw-content-text'})
+
+# print(attack_containers)
+move_dict = {}
+
+move_name_data = attack_containers.find_all('span', {'class':'mw-headline'})
+move_name_list = move_name_data[2:]
+
+# gets all normal moves notations
+for move in move_name_list:
+   if(" " not in move.text and len(move.text) < 4):
+    move_dict[move.text] = ''
+
+
+
 
